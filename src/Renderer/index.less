@@ -1,0 +1,49 @@
+.container {
+  .itemBoxer {
+    .h1 {
+      font-size: 1rem;
+      font-weight: bold;
+      .title {
+        margin-left: .6rem;
+        display: inline;
+        > * {
+          margin-right: .6rem;
+        }
+        > div {
+          display: inline;
+        }
+        p {
+          display: inline;
+        }
+        img {
+          max-width: 10rem;
+        }
+      }
+    }
+    
+    .optsBoxer {
+      margin: 1.2rem 0 1.8rem 2rem;
+      padding-bottom: 1.2rem;
+      position: relative;
+      .errors {
+        margin: 0;
+        position: absolute;
+        color: red;
+      }
+      .optItemBoxer {
+        margin-bottom: .6rem;
+        display: flex;
+        align-items: center;
+        input[type=radio], label {
+          cursor: pointer;
+        }
+        img {
+          max-width: 10rem;
+        }
+        .optLabel {
+          padding-left: .6rem;
+        }
+      }
+    }
+  }
+}
