@@ -1,0 +1,28 @@
+{
+  "name": "wujh-antd-table",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],	// npm 发布白名单
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2064135029/wujh-antd-table.git"
+  },
+  "author": "wujhe",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/2064135029/wujh-antd-table/issues"
+  },
+  "homepage": "https://github.com/2064135029/wujh-antd-table#readme",
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  }
+}
