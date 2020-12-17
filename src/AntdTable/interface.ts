@@ -1,5 +1,9 @@
+import { PaginationProps } from 'antd/lib/pagination'
 
 
+export interface TablePagination extends PaginationProps { 
+
+}
 export interface GridTableProps { 
     columns?: Array<Object>;
     editorRowKey?: string;
@@ -7,7 +11,7 @@ export interface GridTableProps {
     rowClassName?: string;
     rowKey?: string;
     dataSource?: Array<Object>;
-    pagination?: any;
+    pagination?: TablePagination;
     onChange?: Function,
     filterModalProps?: any,
     filterTableProps?: any,
@@ -16,3 +20,4 @@ export interface GridTableProps {
     onRow?: any,
     restProps?: any
 }
+

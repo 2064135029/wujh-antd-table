@@ -4,7 +4,7 @@ import { isBoolean, extend, isFunction, result, isObject, get, has } from "lodas
 import { Form } from 'antd';
 import editorComponents from "../editorComponents";
 
-export default function BodyEditorCell(props) {
+const  BodyEditorCell = (props)=> {
   let {
     editable = {},
     dataIndex,
@@ -63,3 +63,5 @@ export default function BodyEditorCell(props) {
 
   return <td {...restProps}>{editing ? renderEditCell() : children}</td>;
 }
+
+export default BodyEditorCell; 

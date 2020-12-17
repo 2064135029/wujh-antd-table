@@ -31,8 +31,8 @@ import {
   eq,
 } from "lodash";
 import GridTableContext from "./context";
-import HeadFilterCell from "./header/cell";
-import BodyEditorCell from "./body/cell";
+import HeadFilterCell from "./HeadFilterCell";
+import BodyEditorCell from "./BodyEditorCell";
 import FilterTable from "./filterTable";
 import { editorComponentConfigs } from "./editorComponents";
 import {
@@ -44,8 +44,9 @@ import {
 } from "./util";
 import * as conditions from "./conditions";
 import styles from "./index.module.scss";
+import { FormInstance } from 'antd/lib/form';
 
-import { GridTableProps } from "./interface";
+import { GridTableProps, TablePagination } from "./interface";
 
 function OverlayLayer(props) {
   let {
@@ -101,7 +102,7 @@ function OverlayLayer2(props) {
     top: 0,
   });
   let wrapper = useRef();
-  let container = useRef();
+  let container = useRef<any>();
 
   useEffect(() => {
     const hideModel = (e) => {
@@ -230,9 +231,11 @@ let GridTable = function GridTable(props: GridTableProps, ref) {
   let [filterModalVisible, setFilterModalVisible] = useState(false); //过滤弹出窗显示状态
   let [currentEditorRowKey, setEditorRowKey] = useState([]);
   let curentContainerRef = useRef(null);
-  /**table */
+/**table */
+  
+const formRef = React.createRef<FormInstance>();
 
-  const getRowKey = useMemo(() => {
+  const getRowKey: any = useMemo(() => {
     if (typeof rowKey === "function") {
       return rowKey;
     } else if (typeof rowKey === "string") {
@@ -241,6 +244,7 @@ let GridTable = function GridTable(props: GridTableProps, ref) {
       };
     } else {
       console.warn("请设置rowKey");
+      return '';
     }
   }, [rowKey]);
 
@@ -280,7 +284,7 @@ let GridTable = function GridTable(props: GridTableProps, ref) {
       : {};
   }, []);
 
-  const onChangeHandler = (pagination, _filters, sorter, extra) => {
+  const onChangeHandler = (pagination?: TablePagination, _filters?: any, sorter?:any, extra?:any) => {
     if (isCanFilter) {
       let table = contextValue.current.table;
       if (!pagination) {
@@ -322,7 +326,7 @@ let GridTable = function GridTable(props: GridTableProps, ref) {
       typeof r === "string" || typeof r === "number" ? r : getRowKey(r);
     let { transform, type } = editable;
     let fieldName = getFieldName(rowKey, name);
-    let value = props.form.getFieldValue(fieldName);
+    let value = formRef.current.getFieldValue(fieldName);
     transform =
       transform ||
       (editorComponentConfigs[type] && editorComponentConfigs[type].transform);
@@ -331,7 +335,7 @@ let GridTable = function GridTable(props: GridTableProps, ref) {
     }
     return value;
   };
-  const getFormRowData = (r, custType) => {
+  const getFormRowData = (r: Object, custType?: any) => {
     let rowKey = getRowKey(r);
     return currentEditorFileds.reduce((acc, { name, editable }) => {
       let { transform, type } = editable;
@@ -458,7 +462,7 @@ let GridTable = function GridTable(props: GridTableProps, ref) {
   );
   useEffect(() => {
     let defaultFilters = [];
-    memoColumns.forEach((d) => {
+    memoColumns.forEach((d: any) => {
       if (d.filterable && d.filterable.defaultFilter) {
         let { name, type } = d.filterable;
         let item = d.filterable.defaultFilter;
@@ -485,7 +489,7 @@ let GridTable = function GridTable(props: GridTableProps, ref) {
   const isEditing = useCallback(
     (row) => {
       let rowKey = getRowKey(row);
-      let rowKeys = !editorRowKey ? currentEditorRowKey : editorRowKey;
+      let rowKeys: any = !editorRowKey ? currentEditorRowKey : editorRowKey;
       if (typeof rowKeys === "function") {
         return rowKeys(row) === true;
       } else if (isArray(rowKeys)) {
@@ -497,6 +501,7 @@ let GridTable = function GridTable(props: GridTableProps, ref) {
   );
 
   const validateFields = (callback, typeField) => {
+   
     props.form.validateFields((error, result) => {
       if (error) {
         return;
@@ -513,20 +518,30 @@ let GridTable = function GridTable(props: GridTableProps, ref) {
   };
   const validateRowFields = (row, callback) => {
     let fields = getRowFormRealFields(row);
-    props.form.validateFields(
-      fields.map((d) => d.realName),
-      (error, result) => {
-        if (error) {
-          return;
-        }
-        let rowData = getFormRowData(row);
-        let newRowData = (result = {
-          ...row,
-          ...rowData,
-        });
-        callback(newRowData);
-      }
-    );
+    formRef.current.validateFields(fields.map(d => d.realName)).then(values => { 
+      const rowData = getFormRowData(row);
+      callback({
+        ...row,
+        ...rowData,
+        ...values
+      });
+    }).catch(errorInfo => {
+
+    });
+    // validateFields(
+    //   fields.map((d) => d.realName),
+    //   (error, result) => {
+    //     if (error) {
+    //       return;
+    //     }
+    //     let rowData = getFormRowData(row);
+    //     let newRowData = (result = {
+    //       ...row,
+    //       ...rowData,
+    //     });
+    //     callback(newRowData);
+    //   }
+    // );
   };
 
   if (!contextValue.current) {
@@ -842,7 +857,7 @@ let GridTable = function GridTable(props: GridTableProps, ref) {
   );
 };
 
-GridTable = Form.create()(React.forwardRef(GridTable));
+// GridTable = Form.create()(React.forwardRef(GridTable));
 GridTable.defaultProps = {
   filterModalProps: {},
   filterTableProps: {},
