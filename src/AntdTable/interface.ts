@@ -2,13 +2,13 @@ import { PaginationProps } from 'antd/lib/pagination'
 
 
 export interface TablePagination extends PaginationProps { 
-
+    read: Function
 }
 export interface GridTableProps { 
     columns?: Array<Object>;
     editorRowKey?: string;
     components?: any;
-    rowClassName?: string;
+    rowClassName?: any;
     rowKey?: string;
     dataSource?: Array<Object>;
     pagination?: TablePagination;

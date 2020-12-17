@@ -9,9 +9,9 @@ import React, {
 } from "react";
 import ReactDOM, { createPortal } from "react-dom";
 import classNames from "classnames";
-import trigger from "rc-trigger";
+// import trigger from "rc-trigger";
 import { Table, Form, Modal, Tooltip } from "antd";
-import Animate from "rc-animate";
+// import Animate from "rc-animate";
 import {
   isUndefined,
   find,
@@ -208,8 +208,8 @@ function OverlayLayer2(props) {
 //   );
 // }
 
-let GridTable = function GridTable(props: GridTableProps, ref) {
-  const {
+function GridTable(props: GridTableProps, ref) {
+  let {
     columns,
     editorRowKey,
     components,
@@ -249,7 +249,7 @@ const formRef = React.createRef<FormInstance>();
   }, [rowKey]);
 
   const hasPagination = useMemo(() => {
-    return pagination !== false;
+    return pagination.hideOnSinglePage;
   }, [pagination]);
   // let paginationNotBool=isObjectLike(pagination);
   // if(paginationNotBool&&dataSource&&pagination.current==1&&dataSource.length<=0){
@@ -306,7 +306,7 @@ const formRef = React.createRef<FormInstance>();
       }
     }
     if (hasGridPagination) {
-      props.pagination.read({
+      pagination.read({
         page: pagination.current,
         pageSize: pagination.pageSize,
         ..._filters,
@@ -501,11 +501,7 @@ const formRef = React.createRef<FormInstance>();
   );
 
   const validateFields = (callback, typeField) => {
-   
-    props.form.validateFields((error, result) => {
-      if (error) {
-        return;
-      }
+    formRef.current.validateFields().then(values => {
       let newData = dataSource.map((item) => {
         let row = getFormRowData(item, typeField ? item[typeField] : null);
         return {
@@ -515,6 +511,19 @@ const formRef = React.createRef<FormInstance>();
       });
       callback(newData);
     });
+    // props.form.validateFields((error, result) => {
+    //   if (error) {
+    //     return;
+    //   }
+    //   let newData = dataSource.map((item) => {
+    //     let row = getFormRowData(item, typeField ? item[typeField] : null);
+    //     return {
+    //       ...item,
+    //       ...row,
+    //     };
+    //   });
+    //   callback(newData);
+    // });
   };
   const validateRowFields = (row, callback) => {
     let fields = getRowFormRealFields(row);
@@ -525,8 +534,6 @@ const formRef = React.createRef<FormInstance>();
         ...rowData,
         ...values
       });
-    }).catch(errorInfo => {
-
     });
     // validateFields(
     //   fields.map((d) => d.realName),
@@ -551,7 +558,7 @@ const formRef = React.createRef<FormInstance>();
         pagination: getDefaultPagination(pagination),
       },
       columnsUniqueId: {},
-      form: props.form,
+      form: formRef.current,
     };
   }
   contextValue.current.getRowKey = getRowKey;
@@ -572,12 +579,12 @@ const formRef = React.createRef<FormInstance>();
   };
   useImperativeHandle(ref, () => contextValue.current, [contextValue]);
 
-  const getColumnUniqueId = (name) => {
-    if (!contextValue.columnsUniqueId[name]) {
-      contextValue.columnsUniqueId[name] = uniqueId(name);
-    }
-    return contextValue.columnsUniqueId[name];
-  };
+  // const getColumnUniqueId = (name) => {
+  //   if (!contextValue.columnsUniqueId[name]) {
+  //     contextValue.columnsUniqueId[name] = uniqueId(name);
+  //   }
+  //   return contextValue.columnsUniqueId[name];
+  // };
   const isCanEditor = useMemo(() => {
     return some(columns, (d) => !!d.editable);
   }, [columns]);
@@ -585,7 +592,7 @@ const formRef = React.createRef<FormInstance>();
     return some(columns, (d) => !!d.filterable);
   }, [columns]);
   let tableComponents = useMemo(() => {
-    let result = {};
+    let result: any = {};
     if (isCanEditor) {
       result.body = {
         cell: BodyEditorCell,
@@ -599,7 +606,7 @@ const formRef = React.createRef<FormInstance>();
     return merge(result, components || {});
   }, [isCanFilter, isCanEditor, components]);
   let memoColumns = useMemo(() => {
-    return columns.map((c) => {
+    return columns.map((c: any) => {
       let editable = c.editable,
         filterable = c.filterable;
       if (!editable && !filterable) {
@@ -740,7 +747,7 @@ const formRef = React.createRef<FormInstance>();
       );
     }, [overlayLayer]);
     onNewRow = (record) => {
-      let oldRow = {};
+      let oldRow: any = {};
       if (typeof onRow === "function") {
         oldRow = onRow(record);
       }
@@ -828,7 +835,7 @@ const formRef = React.createRef<FormInstance>();
           bordered
           {...restProps}
           onRow={onNewRow}
-          pagination={hasGridPagination ? pagination.props : pagination}
+          pagination={pagination}
           dataSource={dataSource}
           onChange={onChangeHandler}
           rowClassName={rowClassNameFn}
