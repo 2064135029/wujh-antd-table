@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { TaskTestSchema, TaskTestSchemaOptions, AnswerItemType } from '../types';
 import { getTestType, TEST_OPTIONS_PREFIX } from '../utils';
 import styles from './index.less';
+import { Button } from 'antd'
 
 type Inputs = {
   example: string,
@@ -133,6 +134,7 @@ const InternalRenderer: React.ForwardRefRenderFunction<unknown, TestRendererProp
   
   return (
     <div className={styles.container}>
+      <Button></Button>
       <form>
         {
           props.schemas.map((item: TaskTestSchema) => (

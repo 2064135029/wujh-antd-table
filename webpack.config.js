@@ -66,6 +66,7 @@ if (process.env.NODE_ENV === "production") {
     externals: {
       react: "react",
       "react-dom": "react-dom",
+      antd: "antd",
     },
     plugins: [
       new CleanWebpackPlugin(), // 编译之前清空 /dist

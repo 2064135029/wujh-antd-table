@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import Renderer from '../../src/Renderer';
 import { RenderRef, AnswerItemType } from '../../src/types';
 import { MOCK_SCHEMA } from './mock';
+import AntTable from '../../src/AntdTable';
 
 const App: React.SFC = () => {
 
@@ -13,13 +14,10 @@ const App: React.SFC = () => {
     console.log('answers:::', answers);
   }, []);
 
+  const columns = [];
   return (
     <div>
-      <Renderer
-        render={renderer}
-        schemas={MOCK_SCHEMA}
-        onSubmit={handleSubmit}
-      />
+     <AntTable columns={columns}></AntTable>
       <button onClick={() => {
         renderer.current.submit();
       }}>提交</button>
