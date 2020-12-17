@@ -9,9 +9,7 @@ import React, {
 } from "react";
 import ReactDOM, { createPortal } from "react-dom";
 import classNames from "classnames";
-// import trigger from "rc-trigger";
 import { Table, Form, Modal, Tooltip } from "antd";
-// import Animate from "rc-animate";
 import {
   isUndefined,
   find,
@@ -208,7 +206,7 @@ function OverlayLayer2(props) {
 //   );
 // }
 
-function GridTable(props: GridTableProps, ref) {
+const GridTable = React.forwardRef<HTMLDivElement, GridTableProps>((props: GridTableProps, ref)=> {
   let {
     columns,
     editorRowKey,
@@ -233,8 +231,10 @@ function GridTable(props: GridTableProps, ref) {
   let curentContainerRef = useRef(null);
 /**table */
   
+  // console.log(columns);
+  
 const formRef = React.createRef<FormInstance>();
-
+console.log(formRef);
   const getRowKey: any = useMemo(() => {
     if (typeof rowKey === "function") {
       return rowKey;
@@ -249,7 +249,7 @@ const formRef = React.createRef<FormInstance>();
   }, [rowKey]);
 
   const hasPagination = useMemo(() => {
-    return pagination.hideOnSinglePage;
+    return !!pagination && pagination.hideOnSinglePage;
   }, [pagination]);
   // let paginationNotBool=isObjectLike(pagination);
   // if(paginationNotBool&&dataSource&&pagination.current==1&&dataSource.length<=0){
@@ -511,19 +511,6 @@ const formRef = React.createRef<FormInstance>();
       });
       callback(newData);
     });
-    // props.form.validateFields((error, result) => {
-    //   if (error) {
-    //     return;
-    //   }
-    //   let newData = dataSource.map((item) => {
-    //     let row = getFormRowData(item, typeField ? item[typeField] : null);
-    //     return {
-    //       ...item,
-    //       ...row,
-    //     };
-    //   });
-    //   callback(newData);
-    // });
   };
   const validateRowFields = (row, callback) => {
     let fields = getRowFormRealFields(row);
@@ -535,20 +522,6 @@ const formRef = React.createRef<FormInstance>();
         ...values
       });
     });
-    // validateFields(
-    //   fields.map((d) => d.realName),
-    //   (error, result) => {
-    //     if (error) {
-    //       return;
-    //     }
-    //     let rowData = getFormRowData(row);
-    //     let newRowData = (result = {
-    //       ...row,
-    //       ...rowData,
-    //     });
-    //     callback(newRowData);
-    //   }
-    // );
   };
 
   if (!contextValue.current) {
@@ -605,6 +578,7 @@ const formRef = React.createRef<FormInstance>();
     }
     return merge(result, components || {});
   }, [isCanFilter, isCanEditor, components]);
+
   let memoColumns = useMemo(() => {
     return columns.map((c: any) => {
       let editable = c.editable,
@@ -828,6 +802,7 @@ const formRef = React.createRef<FormInstance>();
     );
   };
 
+  // return <>吴建何</>
   return (
     <div ref={curentContainerRef} className={styles.gridTableContainer}>
       <GridTableContext.Provider value={contextValue.current}>
@@ -862,9 +837,9 @@ const formRef = React.createRef<FormInstance>();
       {renderOverlayLayer()}
     </div>
   );
-};
+});
 
-// GridTable = Form.create()(React.forwardRef(GridTable));
+// GridTable = React.forwardRef(GridTable);
 GridTable.defaultProps = {
   filterModalProps: {},
   filterTableProps: {},

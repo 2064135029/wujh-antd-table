@@ -5,6 +5,7 @@ import Renderer from '../../src/Renderer';
 import { RenderRef, AnswerItemType } from '../../src/types';
 import { MOCK_SCHEMA } from './mock';
 import AntTable from '../../src/AntdTable';
+import { Table } from 'antd'
 
 const App: React.FC = () => {
 
@@ -45,8 +46,8 @@ const App: React.FC = () => {
   ];
   return (
     <div>
-     <AntTable columns={columns} dataSource={dataSource}></AntTable>
-     吴建何
+     <AntTable rowKey="id" columns={columns} dataSource={dataSource}></AntTable>
+     <Table columns={columns} dataSource={dataSource}></Table>
     </div>
   );
   

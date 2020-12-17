@@ -82,6 +82,11 @@ if (process.env.NODE_ENV === "production") {
       library: "laputarenderer",
       libraryTarget: "umd",
     },
+    externals: {
+      react: "react",
+      "react-dom": "react-dom",
+      antd: "antd",
+    },
     plugins: [
       // 自动注入编译打包好的代码至 html
       new HtmlWebpackPlugin({
