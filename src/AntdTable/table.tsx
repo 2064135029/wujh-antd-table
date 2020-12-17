@@ -43,7 +43,7 @@ import {
   closest,
 } from "./util";
 import * as conditions from "./conditions";
-import styles from "./index.module.scss";
+import styles from "./index.module.less";
 import { FormInstance } from 'antd/lib/form';
 
 import { GridTableProps, TablePagination } from "./interface";

@@ -12,7 +12,7 @@ import editorComponents, { editorComponentConfigs } from "./editorComponents";
 import GridTable from "./table";
 import conditions from "./conditions";
 import { extend, memoize } from "lodash";
-import styles from "./index.module.scss";
+import styles from "./index.module.less";
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {FilterTableProps} from './interface'
 const { Option } = Select;
