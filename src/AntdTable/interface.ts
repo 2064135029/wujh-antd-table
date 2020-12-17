@@ -21,3 +21,16 @@ export interface GridTableProps {
     restProps?: any
 }
 
+
+export interface FilterTableProps { 
+    filters?: Array<Object>,
+    columns?: Array<Object>,
+    visible?: boolean,
+    onOk?: Function,
+    onCancel?: Function,
+    onRemove?: Function,
+    onFieldChange?: Function,
+    onAdd?:Function,
+    filterModalProps:any,
+    filterTableProps:any,
+}

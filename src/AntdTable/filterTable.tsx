@@ -6,15 +6,18 @@ import React, {
   useCallback,
 } from "react";
 import { isObjectLike } from "lodash";
-import { Icon, Select, Button, Modal } from "antd";
+import {  Select, Button, Modal } from "antd";
 import { CONDITIONS_CATEGORYS } from "./conditions";
 import editorComponents, { editorComponentConfigs } from "./editorComponents";
 import GridTable from "./table";
 import conditions from "./conditions";
 import { extend, memoize } from "lodash";
 import styles from "./index.module.scss";
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import {FilterTableProps} from './interface'
+const { Option } = Select;
 
-const FilterTable = forwardRef(function FilterTable(props, ref) {
+const FilterTable = forwardRef(function FilterTable(props: FilterTableProps, ref) {
   let {
     filters,
     columns,
@@ -40,8 +43,8 @@ const FilterTable = forwardRef(function FilterTable(props, ref) {
       },
     ].concat(
       columns
-        .filter((c) => c.filterable)
-        .map((c) => {
+        .filter((c:any) => c.filterable)
+        .map((c:any) => {
           filterStorage.current.fieldInfo[c.filterable.name] = c;
           return {
             value: c.filterable.name,
@@ -98,7 +101,7 @@ const FilterTable = forwardRef(function FilterTable(props, ref) {
               }}
             >
               {fields.map((d) => (
-                <Select.Option key={d.value}>{d.text}</Select.Option>
+                <Option key={d.value} value={d.value}>{d.text}</Option>
               ))}
             </Select>
           );
@@ -188,18 +191,21 @@ const FilterTable = forwardRef(function FilterTable(props, ref) {
       key: "operation",
       render(c, r, index) {
         return (
-          <Icon
-            onClick={() => {
-              onRemove(r, index);
-            }}
-            type="delete"
-            style={{ cursor: "pointer" }}
-          />
+          // <Icon
+          //   onClick={() => {
+          //     onRemove(r, index);
+          //   }}
+          //   type="delete"
+          //   style={{ cursor: "pointer" }}
+          // />
+          <DeleteOutlined  onClick={() => {
+            onRemove(r, index);
+          }}/>
         );
       },
     },
   ];
-  const gridTableRef = useRef();
+  const gridTableRef = useRef<any>();
   const validateFields = (callback) => {
     let current = gridTableRef.current;
     current.validateFields((result) => {
@@ -252,14 +258,16 @@ const FilterTable = forwardRef(function FilterTable(props, ref) {
         columns={filterColumns}
         dataSource={filters}
         footer={() => (
-          <Button
-            type="primary"
-            onClick={onAddHandler}
-            shape="circle"
-            icon="plus"
-            size="small"
-          />
+          // <Button
+          //   type="primary"
+          //   onClick={onAddHandler}
+          //   shape="circle"
+          //   icon="plus"
+          //   size="small"
+          // />
+          <PlusOutlined type="primary"  shape="circle" onClick={onAddHandler}/>
         )}
+        
       />
     </Modal>
   );
