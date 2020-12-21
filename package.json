@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/yotcap/laputa-renderer#readme",
   "dependencies": {
+    "@ant-design/compatible": "^1.0.8",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "antd": "^4.9.4",

@@ -82,10 +82,10 @@ if (process.env.NODE_ENV === "production") {
     ...base,
     entry: path.join(__dirname, "example/src/index.tsx"),
     output: {
-      path: path.join(__dirname, "example/dist"),
-      filename: "bundle.js",
-      library: "laputarenderer",
-      libraryTarget: "umd",
+      // path: path.join(__dirname, "example/dist"),
+      // filename: "bundle.js",
+      // library: "laputarenderer",
+      // libraryTarget: "umd",
     },
     // externals: {
     //   react: "react",
@@ -98,6 +98,7 @@ if (process.env.NODE_ENV === "production") {
         filename: "index.html",
       }),
     ],
+    devtool: "source-map", // 代码调试
     devServer: {
       // port: 8008,
     },

@@ -29,6 +29,8 @@ export default function HeadFilterCell(props) {
   let { getPopupContainer } = filterable || {};
 
   const onFilterClick = e => {
+    console.log(e);
+    console.log(filterable);
     context.onFilterClick({
       ...filterable
     });

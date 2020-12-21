@@ -52,7 +52,7 @@ const App: React.FC = () => {
   return (
     <div>
       wujhe
-     <AntTable rowKey="id" columns={columns} dataSource={dataSource}></AntTable>
+     <AntTable rowKey="age" columns={columns} dataSource={dataSource}></AntTable>
      <Table columns={columns} dataSource={dataSource}></Table>
     </div>
   );

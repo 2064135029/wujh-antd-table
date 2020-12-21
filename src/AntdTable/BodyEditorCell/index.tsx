@@ -1,8 +1,9 @@
 import React, { useContext, useMemo } from "react";
 import GridTableContext from "../context";
 import { isBoolean, extend, isFunction, result, isObject, get, has } from "lodash";
-import { Form } from 'antd';
-import { FormInstance } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+// import { FormInstance } from 'antd/lib/form';
 import editorComponents from "../editorComponents";
 
 const  BodyEditorCell = (props)=> {
@@ -22,7 +23,7 @@ const  BodyEditorCell = (props)=> {
     getFormFieldValue
   } = useContext(GridTableContext);
   let { getFieldDecorator } = form;
-  let  commonColumnOps={
+  let commonColumnOps = {
     editable,
     dataIndex,
     fieldName,
@@ -32,20 +33,20 @@ const  BodyEditorCell = (props)=> {
     getFormFieldValue,
     getFieldName,
     editorComponents
-  }
+  };
   const wrapComponent = (options = {}, component,columnOps=commonColumnOps) => {
     let {editable,record,dataIndex,form}=columnOps;
-    
-    // const formRef = React.createRef<FormInstance>();
+  
     let { getFieldDecorator } = form;
-    // let { getFieldDecorator } = formRef.current;
-    
+  
     let fieldOps = {};
     if (has(editable, 'options')) {
       fieldOps=isFunction(editable.options) ? editable.options(columnOps) : get(editable, 'options', {});
     }
     
-    return getFieldDecorator(
+    // console.log(form);
+  
+    return getFieldDecorator && getFieldDecorator(
       fieldName,
       extend({
         initialValue: record[dataIndex]
