@@ -56,10 +56,10 @@ export const editorComponentConfigs = {
 };
 // 内置编辑组件
 const editorComponents = {
-  list(wrapComponent, { editable }) {
+  list(opt, { editable }) {
     let valueField = editable.valueField || 'key';
     let labelField = editable.labelField || 'label';
-    return <Form.Item>
+    return <Form.Item  {...opt}>
       <Select
         allowClear
         //  getPopupContainer={triggerNode => triggerNode.parentNode}
@@ -74,13 +74,13 @@ const editorComponents = {
       </Select>,
    </Form.Item>
   },
-  text(wrapComponent) {
-    return <Form.Item><Input key="text" style={{ width: '100%' }} /></Form.Item>
+  text(opt) {
+    return <Form.Item {...opt}><Input key="text" style={{ width: '100%' }} /></Form.Item>
   },
-  number(wrapComponent) {
-    return <Form.Item><InputNumber key="number" style={{ width: '100%' }} /></Form.Item>
+  number(opt) {
+    return <Form.Item  {...opt}><InputNumber key="number" style={{ width: '100%' }} /></Form.Item>
   },
-  date(wrapComponent) {
+  date(opt) {
     // return wrapComponent(
     //   {
     //     getValueProps(value) {
@@ -101,10 +101,10 @@ const editorComponents = {
     //     //   return value;
     //     // }
     //   },
-   return <Form.Item> <DatePicker key="date" style={{ width: '100%' }} /></Form.Item>
+   return <Form.Item  {...opt}> <DatePicker key="date" style={{ width: '100%' }} /></Form.Item>
     // );
   },
-  datetime(wrapComponent) {
+  datetime(opt) {
     // return wrapComponent(
     //   {
     //     getValueProps(value) {
@@ -125,10 +125,10 @@ const editorComponents = {
     //     //   return value;
     //     // }
     //   },
-     return  <Form.Item>  <DatePicker showTime key="datetime" style={{ width: '100%' }} /></Form.Item>
+     return  <Form.Item  {...opt}>  <DatePicker showTime key="datetime" style={{ width: '100%' }} /></Form.Item>
     // );
   },
-  time(wrapComponent) {
+  time(opt) {
     // return wrapComponent(
     //   {
     //     getValueProps(value) {
@@ -149,10 +149,10 @@ const editorComponents = {
         //   return value;
         // }
       // },
-     return <Form.Item><TimePicker style={{ width: '100%' }}></TimePicker></Form.Item>
+     return <Form.Item  {...opt}><TimePicker style={{ width: '100%' }}></TimePicker></Form.Item>
     // );
   },
-  bool(wrapComponent, props) {
+  bool(opt, props) {
     // return wrapComponent(
     //   {
     //     valuePropName: 'checked',
@@ -163,13 +163,13 @@ const editorComponents = {
     //       return false;
     //     },
     //   },
-    return  <Form.Item>  <Checkbox key="bool" /></Form.Item>
+    return  <Form.Item  {...opt}>  <Checkbox key="bool" /></Form.Item>
     // );
   },
-  boolSelect(wrapComponent, { editable }) {
+  boolSelect(opt, { editable }) {
     // return wrapComponent(
     //   {},
-   return <Form.Item>   <Select
+   return <Form.Item  {...opt}>   <Select
         // getPopupContainer={triggerNode => triggerNode.parentNode}
         key="boolSelect"
         style={{ width: '100%' }}

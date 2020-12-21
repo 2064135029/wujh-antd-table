@@ -47,11 +47,11 @@ const  BodyEditorCell = (props)=> {
     
     // console.log(getFieldDecorator);
   
-    return extend({
-      fieldName: fieldName,
-      initialValue: record[dataIndex]
-    }, options, fieldOps);
-    // (has(editable, 'props') ? React.cloneElement(component, isFunction(editable.props) ? editable.props(columnOps) : editable.props) : component);
+    // return extend({
+    //   name: fieldName,
+    //   initialValue: record[dataIndex]
+    // }, options, fieldOps);
+    // // (has(editable, 'props') ? React.cloneElement(component, isFunction(editable.props) ? editable.props(columnOps) : editable.props) : component);
   };
   // 渲染编辑单元格
   const renderEditCell = () => {
@@ -63,7 +63,10 @@ const  BodyEditorCell = (props)=> {
     } else {
       renderComponent = editorComponents[type] || editorComponents.text;
     }
-    editableComponent = renderComponent(wrapComponent, { ...commonColumnOps });
+    editableComponent = renderComponent({
+      name: fieldName,
+      initialValue: ''
+    });  // renderComponent(wrapComponent, { ...commonColumnOps });
     return editableComponent;
     // return <Form.Item  style={{ margin: 0 }}>{editableComponent}</Form.Item>;
   };
