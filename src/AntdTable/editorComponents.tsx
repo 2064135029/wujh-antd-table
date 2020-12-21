@@ -2,6 +2,7 @@ import React from 'react';
 import { Input, DatePicker, InputNumber, Checkbox, Select, TimePicker } from 'antd';
 import { isBoolean, identity } from 'lodash';
 import moment, { isMoment } from 'moment';
+import { Form } from 'antd';
 // import { text } from 'express';
 
 export const editorComponentConfigs = {
@@ -58,8 +59,7 @@ const editorComponents = {
   list(wrapComponent, { editable }) {
     let valueField = editable.valueField || 'key';
     let labelField = editable.labelField || 'label';
-    return wrapComponent(
-      {},
+    return <Form.Item>
       <Select
         allowClear
         //  getPopupContainer={triggerNode => triggerNode.parentNode}
@@ -72,104 +72,104 @@ const editorComponents = {
           </Select.Option>
         ))}
       </Select>,
-    );
+   </Form.Item>
   },
   text(wrapComponent) {
-    return wrapComponent({}, <Input key="text" style={{ width: '100%' }} />);
+    return <Form.Item><Input key="text" style={{ width: '100%' }} /></Form.Item>
   },
   number(wrapComponent) {
-    return wrapComponent({}, <InputNumber key="number" style={{ width: '100%' }} />);
+    return <Form.Item><InputNumber key="number" style={{ width: '100%' }} /></Form.Item>
   },
   date(wrapComponent) {
-    return wrapComponent(
-      {
-        getValueProps(value) {
-          if (value && !isMoment(value)) {
-            value = moment(value);
-          }
-          if (value == '') {
-            value = null;
-          }
-          return {
-            value: value,
-          };
-        },
-        // normalize(value) {
-        //   if (value && !isMoment(value)) {
-        //     return moment(value);
-        //   }
-        //   return value;
-        // }
-      },
-      <DatePicker key="date" style={{ width: '100%' }} />,
-    );
+    // return wrapComponent(
+    //   {
+    //     getValueProps(value) {
+    //       if (value && !isMoment(value)) {
+    //         value = moment(value);
+    //       }
+    //       if (value == '') {
+    //         value = null;
+    //       }
+    //       return {
+    //         value: value,
+    //       };
+    //     },
+    //     // normalize(value) {
+    //     //   if (value && !isMoment(value)) {
+    //     //     return moment(value);
+    //     //   }
+    //     //   return value;
+    //     // }
+    //   },
+   return <Form.Item> <DatePicker key="date" style={{ width: '100%' }} /></Form.Item>
+    // );
   },
   datetime(wrapComponent) {
-    return wrapComponent(
-      {
-        getValueProps(value) {
-          if (value && !isMoment(value)) {
-            value = moment(value);
-          }
-          if (value == '') {
-            value = null;
-          }
-          return {
-            value: value,
-          };
-        },
-        // normalize(value) {
-        //   if (value && !isMoment(value)) {
-        //     return moment(value);
-        //   }
-        //   return value;
-        // }
-      },
-      <DatePicker showTime key="datetime" style={{ width: '100%' }} />,
-    );
+    // return wrapComponent(
+    //   {
+    //     getValueProps(value) {
+    //       if (value && !isMoment(value)) {
+    //         value = moment(value);
+    //       }
+    //       if (value == '') {
+    //         value = null;
+    //       }
+    //       return {
+    //         value: value,
+    //       };
+    //     },
+    //     // normalize(value) {
+    //     //   if (value && !isMoment(value)) {
+    //     //     return moment(value);
+    //     //   }
+    //     //   return value;
+    //     // }
+    //   },
+     return  <Form.Item>  <DatePicker showTime key="datetime" style={{ width: '100%' }} /></Form.Item>
+    // );
   },
   time(wrapComponent) {
-    return wrapComponent(
-      {
-        getValueProps(value) {
-          if (value && !isMoment(value)) {
-            value = moment(value, 'HH:mm:ss');
-          }
-          if (value == '') {
-            value = null;
-          }
-          return {
-            value: value,
-          };
-        },
+    // return wrapComponent(
+    //   {
+    //     getValueProps(value) {
+    //       if (value && !isMoment(value)) {
+    //         value = moment(value, 'HH:mm:ss');
+    //       }
+    //       if (value == '') {
+    //         value = null;
+    //       }
+    //       return {
+    //         value: value,
+    //       };
+    //     },
         // normalize(value) {
         //   if (value && !isMoment(value)) {
         //     return moment(value,'HH:mm:ss');
         //   }
         //   return value;
         // }
-      },
-      <TimePicker style={{ width: '100%' }}></TimePicker>,
-    );
+      // },
+     return <Form.Item><TimePicker style={{ width: '100%' }}></TimePicker></Form.Item>
+    // );
   },
   bool(wrapComponent, props) {
-    return wrapComponent(
-      {
-        valuePropName: 'checked',
-        normalize(value) {
-          if (isBoolean(value)) {
-            return value;
-          }
-          return false;
-        },
-      },
-      <Checkbox key="bool" />,
-    );
+    // return wrapComponent(
+    //   {
+    //     valuePropName: 'checked',
+    //     normalize(value) {
+    //       if (isBoolean(value)) {
+    //         return value;
+    //       }
+    //       return false;
+    //     },
+    //   },
+    return  <Form.Item>  <Checkbox key="bool" /></Form.Item>
+    // );
   },
   boolSelect(wrapComponent, { editable }) {
-    return wrapComponent(
-      {},
-      <Select
+    // return wrapComponent(
+    //   {},
+   return <Form.Item>   <Select
         // getPopupContainer={triggerNode => triggerNode.parentNode}
         key="boolSelect"
         style={{ width: '100%' }}
@@ -180,8 +180,9 @@ const editorComponents = {
         <Select.Option key={1} value={1}>
           是
         </Select.Option>
-      </Select>,
-    );
+    </Select>,
+    </Form.Item>
+    // );
   },
 };
 export default editorComponents;

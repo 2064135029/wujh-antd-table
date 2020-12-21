@@ -22,7 +22,7 @@ const  BodyEditorCell = (props)=> {
     getFieldName,
     getFormFieldValue
   } = useContext(GridTableContext);
-  let { getFieldDecorator } = form;
+  // let { getFieldDecorator } = form;
   let commonColumnOps = {
     editable,
     dataIndex,
@@ -37,21 +37,21 @@ const  BodyEditorCell = (props)=> {
   const wrapComponent = (options = {}, component,columnOps=commonColumnOps) => {
     let {editable,record,dataIndex,form}=columnOps;
   
-    let { getFieldDecorator } = form;
+    // let { getFieldDecorator } = form;
   
     let fieldOps = {};
     if (has(editable, 'options')) {
       fieldOps=isFunction(editable.options) ? editable.options(columnOps) : get(editable, 'options', {});
     }
+    console.log(form);
     
-    // console.log(form);
+    // console.log(getFieldDecorator);
   
-    return getFieldDecorator && getFieldDecorator(
-      fieldName,
-      extend({
-        initialValue: record[dataIndex]
-      }, options, fieldOps)
-    )(has(editable,'props')?React.cloneElement(component, isFunction(editable.props)?editable.props(columnOps):editable.props):component);
+    return extend({
+      fieldName: fieldName,
+      initialValue: record[dataIndex]
+    }, options, fieldOps);
+    // (has(editable, 'props') ? React.cloneElement(component, isFunction(editable.props) ? editable.props(columnOps) : editable.props) : component);
   };
   // 渲染编辑单元格
   const renderEditCell = () => {
@@ -63,8 +63,9 @@ const  BodyEditorCell = (props)=> {
     } else {
       renderComponent = editorComponents[type] || editorComponents.text;
     }
-    editableComponent = renderComponent(wrapComponent,{...commonColumnOps});
-    return <Form.Item style={{ margin: 0 }}>{editableComponent}</Form.Item>;
+    editableComponent = renderComponent(wrapComponent, { ...commonColumnOps });
+    return editableComponent;
+    // return <Form.Item  style={{ margin: 0 }}>{editableComponent}</Form.Item>;
   };
 
   return <td {...restProps}>{editing ? renderEditCell() : children}</td>;
