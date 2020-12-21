@@ -9,7 +9,9 @@ import React, {
 } from "react";
 import ReactDOM, { createPortal } from "react-dom";
 import classNames from "classnames";
-import { Table, Form, Modal, Tooltip } from "antd";
+// import { Form } from '@ant-design/compatible';
+// import '@ant-design/compatible/assets/index.css';
+import { Table, Modal, Tooltip, Form} from "antd";
 import {
   isUndefined,
   find,
@@ -206,7 +208,7 @@ function OverlayLayer2(props) {
 //   );
 // }
 
-const GridTable = React.forwardRef<HTMLDivElement, GridTableProps>((props: GridTableProps, ref)=> {
+let GridTable = React.forwardRef<HTMLDivElement, GridTableProps>((props: GridTableProps, ref)=> {
   let {
     columns,
     editorRowKey,
@@ -232,9 +234,11 @@ const GridTable = React.forwardRef<HTMLDivElement, GridTableProps>((props: GridT
 /**table */
   
   // console.log(columns);
+  const [form] = Form.useForm();
   
-const formRef = React.createRef<FormInstance>();
-console.log(formRef);
+//   const formRef = React.createRef<FormInstance>();
+  
+// console.log(formRef);
   const getRowKey: any = useMemo(() => {
     if (typeof rowKey === "function") {
       return rowKey;
@@ -326,7 +330,7 @@ console.log(formRef);
       typeof r === "string" || typeof r === "number" ? r : getRowKey(r);
     let { transform, type } = editable;
     let fieldName = getFieldName(rowKey, name);
-    let value = formRef.current.getFieldValue(fieldName);
+    let value = form.getFieldValue(fieldName);
     transform =
       transform ||
       (editorComponentConfigs[type] && editorComponentConfigs[type].transform);
@@ -501,7 +505,7 @@ console.log(formRef);
   );
 
   const validateFields = (callback, typeField) => {
-    formRef.current.validateFields().then(values => {
+    form.validateFields().then(values => {
       let newData = dataSource.map((item) => {
         let row = getFormRowData(item, typeField ? item[typeField] : null);
         return {
@@ -514,7 +518,7 @@ console.log(formRef);
   };
   const validateRowFields = (row, callback) => {
     let fields = getRowFormRealFields(row);
-    formRef.current.validateFields(fields.map(d => d.realName)).then(values => { 
+    form.validateFields(fields.map(d => d.realName)).then(values => { 
       const rowData = getFormRowData(row);
       callback({
         ...row,
@@ -531,7 +535,7 @@ console.log(formRef);
         pagination: getDefaultPagination(pagination),
       },
       columnsUniqueId: {},
-      form: formRef.current,
+      form: form,
     };
   }
   contextValue.current.getRowKey = getRowKey;
@@ -802,9 +806,9 @@ console.log(formRef);
     );
   };
 
-  // return <>吴建何</>
   return (
     <div ref={curentContainerRef} className={styles.gridTableContainer}>
+      <Form form={form} component={false}>
       <GridTableContext.Provider value={contextValue.current}>
         <Table
           bordered
@@ -833,13 +837,17 @@ console.log(formRef);
             filters={filters}
           />
         ) : null}
-      </GridTableContext.Provider>
+        </GridTableContext.Provider>
+        </Form>
       {renderOverlayLayer()}
     </div>
   );
 });
 
 // GridTable = React.forwardRef(GridTable);
+
+// GridTable = Form.create()(GridTable);
+
 GridTable.defaultProps = {
   filterModalProps: {},
   filterTableProps: {},

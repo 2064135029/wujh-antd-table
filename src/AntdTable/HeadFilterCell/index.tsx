@@ -29,9 +29,11 @@ export default function HeadFilterCell(props) {
   let { getPopupContainer } = filterable || {};
 
   const onFilterClick = e => {
-    // context.onFilterClick({
-    //   ...filterable
-    // });
+    console.log(e);
+    console.log(filterable);
+    context.onFilterClick({
+      ...filterable
+    });
     stopPropagation(e);
   };
   const renderFilterIcon = () => {
@@ -43,7 +45,7 @@ export default function HeadFilterCell(props) {
     });
 
     return (
-        <FunnelPlotOutlined   className={dropdownIconClass}
+        <FunnelPlotOutlined className={dropdownIconClass}
         onClick={onFilterClick}/>
     );
   };
