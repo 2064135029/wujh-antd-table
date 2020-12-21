@@ -2,6 +2,7 @@ import React, { useContext, useMemo } from "react";
 import GridTableContext from "../context";
 import { isBoolean, extend, isFunction, result, isObject, get, has } from "lodash";
 import { Form } from 'antd';
+import { FormInstance } from 'antd/lib/form';
 import editorComponents from "../editorComponents";
 
 const  BodyEditorCell = (props)=> {
@@ -34,7 +35,11 @@ const  BodyEditorCell = (props)=> {
   }
   const wrapComponent = (options = {}, component,columnOps=commonColumnOps) => {
     let {editable,record,dataIndex,form}=columnOps;
-    let {getFieldDecorator}=form;
+    
+    // const formRef = React.createRef<FormInstance>();
+    let { getFieldDecorator } = form;
+    // let { getFieldDecorator } = formRef.current;
+    
     let fieldOps = {};
     if (has(editable, 'options')) {
       fieldOps=isFunction(editable.options) ? editable.options(columnOps) : get(editable, 'options', {});

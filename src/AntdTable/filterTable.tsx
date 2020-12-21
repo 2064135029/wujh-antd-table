@@ -198,7 +198,7 @@ const FilterTable = forwardRef(function FilterTable(props: FilterTableProps, ref
           //   type="delete"
           //   style={{ cursor: "pointer" }}
           // />
-          <DeleteOutlined  onClick={() => {
+          <DeleteOutlined style={{ cursor: "pointer" }} onClick={() => {
             onRemove(r, index);
           }}/>
         );
