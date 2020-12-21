@@ -31,6 +31,8 @@ const FilterTable = forwardRef(function FilterTable(props: FilterTableProps, ref
     filterTableProps,
   } = props;
 
+  console.log(filters);
+
   let filterStorage = useRef({
     fieldInfo: {},
   });
@@ -198,7 +200,7 @@ const FilterTable = forwardRef(function FilterTable(props: FilterTableProps, ref
           //   type="delete"
           //   style={{ cursor: "pointer" }}
           // />
-          <DeleteOutlined  onClick={() => {
+          <DeleteOutlined style={{ cursor: "pointer" }} onClick={() => {
             onRemove(r, index);
           }}/>
         );
@@ -258,13 +260,6 @@ const FilterTable = forwardRef(function FilterTable(props: FilterTableProps, ref
         columns={filterColumns}
         dataSource={filters}
         footer={() => (
-          // <Button
-          //   type="primary"
-          //   onClick={onAddHandler}
-          //   shape="circle"
-          //   icon="plus"
-          //   size="small"
-          // />
           <PlusOutlined type="primary"  shape="circle" onClick={onAddHandler}/>
         )}
         

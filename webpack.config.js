@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+// const { override, fixBabelImports } = require("customize-cra");
 
 const base = {
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
@@ -18,6 +19,10 @@ const base = {
         exclude: /node_modules/,
       },
       // 用于加载解析 less 文件
+      {
+        test: /\.css$/,
+        loaders: ["style-loader", "css-loader", "postcss-loader"],
+      },
       {
         test: /\.less$/,
         use: [
@@ -77,16 +82,15 @@ if (process.env.NODE_ENV === "production") {
     ...base,
     entry: path.join(__dirname, "example/src/index.tsx"),
     output: {
-      path: path.join(__dirname, "example/dist"),
-      filename: "bundle.js",
-      library: "laputarenderer",
-      libraryTarget: "umd",
+      // path: path.join(__dirname, "example/dist"),
+      // filename: "bundle.js",
+      // library: "laputarenderer",
+      // libraryTarget: "umd",
     },
-    externals: {
-      react: "react",
-      "react-dom": "react-dom",
-      antd: "antd",
-    },
+    // externals: {
+    //   react: "react",
+    //   "react-dom": "react-dom",
+    // },
     plugins: [
       // 自动注入编译打包好的代码至 html
       new HtmlWebpackPlugin({
@@ -94,6 +98,7 @@ if (process.env.NODE_ENV === "production") {
         filename: "index.html",
       }),
     ],
+    devtool: "source-map", // 代码调试
     devServer: {
       // port: 8008,
     },
